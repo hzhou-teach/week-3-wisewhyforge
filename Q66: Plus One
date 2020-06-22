@@ -1,0 +1,62 @@
+/*
+    Runtime: 1 ms, faster than 10.74% of Java online submissions for Plus One.
+    Memory Usage: 37.8 MB, less than 72.32% of Java online submissions for Plus One.
+    
+    Difficulty: 5
+    
+    Time: 42 minutes and 23 seconds
+    
+    It took some time to add one to the end of the number because of the corner cases where I have to carry the digits.
+    There was a lot of booleans to use in order to keep track of whether I needed to add or to carry.
+*/
+
+class Solution {
+    public int[] plusOne(int[] digits) {
+        //Creates an array list to keep a running count of the digits
+        ArrayList<Integer> al = new ArrayList<Integer>();
+        //Boolean to see if we need to carry
+        boolean carry = false;
+        //Boolean to see if we have already added
+        boolean added = false;
+        //For every digit starting from the ones digit, add one and add it to the arraylist. 
+        //If there is a carry keep on carrying until it stops.
+        for(int digit = digits.length-1; digit >= 0; digit--){
+            //If we have a nines digit and we haven't added yet(meaning that we haven't finished carrying)
+            //Set carry to true
+            if(digits[digit] == 9 && !added){
+                carry = true;
+                //If the digit is the last digit we add one and then a zero to the arraylist and then leave the loop
+                if(digit == 0){
+                    al.add(0,0);
+                    al.add(0,1);
+                    break;
+                }
+            }else{
+                //No carrying necessary
+                carry = false;
+            }
+            //If we need to carry set the current digit to zero
+            if(carry){
+                digits[digit] = 0;
+            //Else we check if the digit needs to be added by one if so add one to the digit
+            }else{
+                if(!added){
+                    digits[digit] += 1;
+                    added = true;
+                }
+            }
+            //Add the digit to the running digits of the arraylist
+            al.add(0, digits[digit]);
+        }
+        //return the converted arraylist into an array
+        return toArray(al);
+    }
+    
+    private static int[] toArray(ArrayList<Integer> al){
+        int[] ans = new int[al.size()];
+        for(int i = 0; i < al.size(); i++){
+            ans[i] = al.get(i);
+        }
+        return ans;
+    }
+}
