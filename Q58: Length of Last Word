@@ -1,0 +1,42 @@
+/*
+Joseph Luo
+Runtime: 0 ms, faster than 100.00% of Java online submissions for Length of Last Word.
+Memory Usage: 37.6 MB, less than 58.24% of Java online submissions for Length of Last Word.
+
+Time:30-40 minutes
+
+Difficulty: 7
+
+Took some time to figure it out I had to search the question up to start from te end instead of the beginning, 
+and then I got confused on the corner cases like "a " and " a", so I used the didWordHappen method to solve it.
+*/
+
+class Solution {
+    public int lengthOfLastWord(String s) {
+        //If just a space return 0
+        if(s.equals(" "))
+            return 0;
+        //If nothing return nothing
+        if(s.length() == 0)
+            return 0;
+        int current = 0;
+        //Variable that stores whether or not a letter happened
+        boolean didWordHappen = false;
+        //Count down from the end and then once a letter has been found keep counting down until a space is found
+        //if there is a space and no letter just keep on going down
+        for(int i = s.length()-1; i >= 0; i--){
+            //If this isn't a space then add to the count and set that a word happened
+            if(s.charAt(i) != ' '){
+                current++;
+                //Since there is a word set it to true 
+                didWordHappen = true;
+            //This case is where there is a space and letters were used signifying a word
+            //In this case we already have the word just break and return the length
+            }else if(didWordHappen){
+                break;
+            }
+        }
+        
+        return current;
+    }
+}
